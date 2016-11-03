@@ -13,6 +13,7 @@ public struct Receipt {
 	var appVersion: String
 	var opaqueValue: [UInt8]
 	var sha1Hash: [UInt8]
+	var inAppPurchaseReceipts: [InAppPurchaseReceipt]?
 	var originalApplicationVersion: String;
 	var receiptCreationDate: Date
 	var receiptExpirationDate: Date
@@ -25,9 +26,9 @@ public struct InAppPurchaseReceipt {
 	var originalTransactionIdentifier: String
 	var purchaseDate: Date
 	var originalPurchaseDate: Date
-	var subscriptionExpirationDate: Date
-	var cancellationDate: Date
-	var appItemId: String
-	var externalVersionIdentifier: String
+	var subscriptionExpirationDate: Date?
+	var cancellationDate: Date?
+	var appItemId: String?
+	var externalVersionIdentifier: String?
 	var webOrderLineItemId: Int
 }

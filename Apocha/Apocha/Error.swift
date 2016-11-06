@@ -7,3 +7,7 @@
 //
 
 import Foundation
+
+public enum ApochaError: Error {
+	case invalidReceiptURL(Error)
+}

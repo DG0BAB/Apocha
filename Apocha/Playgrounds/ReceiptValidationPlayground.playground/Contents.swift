@@ -3,6 +3,10 @@
 import Cocoa
 import Security.SecAsn1Coder
 
+enum ApochaError: Error {
+	case invalidRecveiptURL(Error)
+}
+
 
 infix operator >>>: LogicalConjunctionPrecedence
 public func >>>(result: OSStatus, function: @autoclosure () -> OSStatus) -> OSStatus {
@@ -12,61 +16,61 @@ public func >>>(result: OSStatus, function: @autoclosure () -> OSStatus) -> OSSt
 	}
 	return result
 }
-let receiptURL = Bundle.main.url(forResource: "receipt_Valid", withExtension: nil)
+//let receiptURL: URL? = URL(fileURLWithPath: "/test")//Bundle.main.url(forResource: "noreceipt", withExtension: nil)
+let receiptURL: URL? = Bundle.main.url(forResource: "receipt_Valid", withExtension: nil)
 
 var rawPayload: Data?
 
 
 if let receiptURL = receiptURL {
 	do {
-		let receiptDataPKCS7 = try! Data(contentsOf: receiptURL)
+		let receiptDataPKCS7 = try Data(contentsOf: receiptURL)
 		var itemFormat: SecExternalFormat = .formatPKCS7
 		var itemType: SecExternalItemType = .itemTypeUnknown
 		var outItems: CFArray?
-		var importExportParams: UnsafePointer<SecItemImportExportKeyParameters>?
-		let ImpStatus = SecItemImport(receiptDataPKCS7 as CFData, nil, &itemFormat, &itemType, [SecItemImportExportFlags.pemArmour], importExportParams, nil, &outItems)
+		let importStatus = SecItemImport(receiptDataPKCS7 as CFData, nil, &itemFormat, &itemType, [SecItemImportExportFlags.pemArmour], nil, nil, &outItems)
 		
-		print(outItems!)
-		
-		if let items = (outItems as NSArray?), items.count == 3 {
-			print(items)
-			var cert: SecCertificate = items.object(at: 0) as! SecCertificate
-			var error: Unmanaged<CFError>?
-			var valueDict: CFDictionary? = SecCertificateCopyValues(cert, nil, &error)
+		if let certificates = outItems as? [SecCertificate], importStatus == noErr {
+			print(outItems!)
 			
-			cert = items.object(at: 1) as! SecCertificate
-			var valueDict1: CFDictionary? = SecCertificateCopyValues(cert, nil, &error)
-		
-			cert = (items.object(at: 2) as! SecCertificate)
-			var valueDict2: CFDictionary? = SecCertificateCopyValues(cert, nil, &error)
+			if certificates.count == 3 {
+				print(certificates)
+				var cert: SecCertificate = certificates[0]
+				var error: Unmanaged<CFError>?
+				var valueDict: CFDictionary? = SecCertificateCopyValues(cert, nil, &error)
+				
+				cert = certificates[1]
+				var valueDict1: CFDictionary? = SecCertificateCopyValues(cert, nil, &error)
+				
+				cert = certificates[2]
+				var valueDict2: CFDictionary? = SecCertificateCopyValues(cert, nil, &error)
+			}
+			let basicX509Policy: SecPolicy = SecPolicyCreateBasicX509();
+			var decoder: CMSDecoder?
+			var content: CFData?
+			var numberOfSigners: Int = 0
+			var signerStatus: CMSSignerStatus = .unsigned
+			var certificateVirificationStatus: OSStatus = OSStatus(CSSMERR_TP_NOT_TRUSTED)
+			
+			let bytes: UnsafeMutablePointer<UInt8> = UnsafeMutablePointer.allocate(capacity: receiptDataPKCS7.count)
+			receiptDataPKCS7.copyBytes(to: bytes, count: receiptDataPKCS7.count)
+			
+			let status = CMSDecoderCreate(&decoder)
+				>>> CMSDecoderUpdateMessage(decoder!, bytes, receiptDataPKCS7.count)
+				>>> CMSDecoderFinalizeMessage(decoder!)
+				>>> CMSDecoderCopyContent(decoder!, &content)
+				>>> CMSDecoderGetNumSigners(decoder!, &numberOfSigners)
+				>>> CMSDecoderCopySignerStatus(decoder!, 0, basicX509Policy, true, &signerStatus, nil, &certificateVirificationStatus)
+			
+			if let payload = content as? Data, status == noErr {
+				print("Status \(status) Number of Signers: \(numberOfSigners) Signer Status: \(signerStatus.rawValue) Certificate: \(certificateVirificationStatus)")
+				print("Payload \(payload)")
+			}
+			
 		}
-		
-		
-		
-		
-		let basicX509Policy: SecPolicy = SecPolicyCreateBasicX509();
-		var decoder: CMSDecoder?
-		var content: CFData?
-		var numberOfSigners: Int = 0
-		var signerStatus: CMSSignerStatus = .unsigned
-		var certificateVirificationStatus: OSStatus = noErr
-		
-		var bytes: UnsafeMutablePointer<UInt8> = UnsafeMutablePointer.allocate(capacity: receiptDataPKCS7.count)
-		receiptDataPKCS7.copyBytes(to: bytes, count: receiptDataPKCS7.count)
-		
-		let status = CMSDecoderCreate(&decoder)
-			>>> CMSDecoderUpdateMessage(decoder!, bytes, receiptDataPKCS7.count)
-			>>> CMSDecoderFinalizeMessage(decoder!)
-			>>> CMSDecoderCopyContent(decoder!, &content)
-			>>> CMSDecoderGetNumSigners(decoder!, &numberOfSigners)
-			>>> CMSDecoderCopySignerStatus(decoder!, 0, basicX509Policy, true, &signerStatus, nil, &certificateVirificationStatus)
-		
-		print("Status \(status) Number of Signers: \(numberOfSigners) Signer Status: \(signerStatus.rawValue) Certificate: \(certificateVirificationStatus)")
-		if let content = content {
-			print("Content \(content)")
-			rawPayload = Data()
-			rawPayload?.append(content as Data)
-		}
+	} catch let error {
+		print(error)
+		throw ApochaError.invalidRecveiptURL(error)
 	}
 	
 	

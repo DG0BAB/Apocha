@@ -10,4 +10,6 @@ import Foundation
 
 public enum ApochaError: Error {
 	case invalidReceiptURL(Error)
+	case decodingReceipt
+	case retrievingCertificateValues(Error)
 }

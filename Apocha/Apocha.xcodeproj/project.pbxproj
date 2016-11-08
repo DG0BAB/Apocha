@@ -10,10 +10,9 @@
 		794928321CA5B22700F6F8C0 /* Apocha.h in Headers */ = {isa = PBXBuildFile; fileRef = 794928311CA5B22700F6F8C0 /* Apocha.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		794928391CA5B22800F6F8C0 /* Apocha.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7949282E1CA5B22700F6F8C0 /* Apocha.framework */; };
 		7949283E1CA5B22800F6F8C0 /* ApochaTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7949283D1CA5B22800F6F8C0 /* ApochaTests.swift */; };
-		797307861DCE572400B223CC /* ReceiptHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 797307851DCE572400B223CC /* ReceiptHandler.swift */; };
-		797307881DCE5E7500B223CC /* ReceiptDecoder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 797307871DCE5E7500B223CC /* ReceiptDecoder.swift */; };
-		799360EF1DC14B7600E2EE9C /* Receipt.swift in Sources */ = {isa = PBXBuildFile; fileRef = 799360EE1DC14B7600E2EE9C /* Receipt.swift */; };
+		799360EF1DC14B7600E2EE9C /* Receipts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 799360EE1DC14B7600E2EE9C /* Receipts.swift */; };
 		79B570181DCFA40100407824 /* Error.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79B570171DCFA40100407824 /* Error.swift */; };
+		79BCAF331DD2346D005F1257 /* Payload.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79BCAF321DD2346D005F1257 /* Payload.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -33,10 +32,9 @@
 		794928381CA5B22800F6F8C0 /* ApochaTests OSX.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "ApochaTests OSX.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		7949283D1CA5B22800F6F8C0 /* ApochaTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApochaTests.swift; sourceTree = "<group>"; };
 		7949283F1CA5B22800F6F8C0 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		797307851DCE572400B223CC /* ReceiptHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReceiptHandler.swift; sourceTree = "<group>"; };
-		797307871DCE5E7500B223CC /* ReceiptDecoder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReceiptDecoder.swift; sourceTree = "<group>"; };
-		799360EE1DC14B7600E2EE9C /* Receipt.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Receipt.swift; sourceTree = "<group>"; };
+		799360EE1DC14B7600E2EE9C /* Receipts.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Receipts.swift; sourceTree = "<group>"; };
 		79B570171DCFA40100407824 /* Error.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Error.swift; sourceTree = "<group>"; };
+		79BCAF321DD2346D005F1257 /* Payload.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Payload.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -81,9 +79,8 @@
 			children = (
 				799360F01DC14B8400E2EE9C /* Supporting Files */,
 				794928311CA5B22700F6F8C0 /* Apocha.h */,
-				799360EE1DC14B7600E2EE9C /* Receipt.swift */,
-				797307851DCE572400B223CC /* ReceiptHandler.swift */,
-				797307871DCE5E7500B223CC /* ReceiptDecoder.swift */,
+				799360EE1DC14B7600E2EE9C /* Receipts.swift */,
+				79BCAF321DD2346D005F1257 /* Payload.swift */,
 				79B570171DCFA40100407824 /* Error.swift */,
 			);
 			path = Apocha;
@@ -217,9 +214,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				79B570181DCFA40100407824 /* Error.swift in Sources */,
-				799360EF1DC14B7600E2EE9C /* Receipt.swift in Sources */,
-				797307881DCE5E7500B223CC /* ReceiptDecoder.swift in Sources */,
-				797307861DCE572400B223CC /* ReceiptHandler.swift in Sources */,
+				799360EF1DC14B7600E2EE9C /* Receipts.swift in Sources */,
+				79BCAF331DD2346D005F1257 /* Payload.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

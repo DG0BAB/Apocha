@@ -10,6 +10,11 @@ import Foundation
 
 public enum ApochaError: Error {
 	case invalidReceiptURL(Error)
-	case decodingReceipt
+	case decodingReceipt(DecodingFailures)
 	case retrievingCertificateValues(Error)
+	
+	public enum DecodingFailures {
+		case retrievingCertificates
+		case retrievingPayload
+	}
 }

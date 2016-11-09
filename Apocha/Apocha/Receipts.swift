@@ -206,11 +206,11 @@ public struct DecodedReceipt {
 	
 	/** Initialzes a DecodedReceipt with the given values.
 	- parameters:
-	- certificates: An array with certificates
-	- payload: The encrypted raw payload of the receipt
-	- numSigners: The number of signers. Default = 0
-	- signerStatus: The signer status. Default is .unsigned
-	- certVerificationStatus: The status of the certificate verification. Default = CSSM_TP_CERTVERIFY_UNKNOWN
+		- certificates: An array with certificates
+		- payload: The encrypted raw payload of the receipt
+		- numSigners: The number of signers. Default = 0
+		- signerStatus: The signer status. Default is .unsigned
+		- certVerificationStatus: The status of the certificate verification. Default = CSSM_TP_CERTVERIFY_UNKNOWN
 	*/
 	init(certificates: [SecCertificate], payload: Data, numSigners: Int = 0, signerStatus: CMSSignerStatus = .unsigned, certVerificationStatus: CSSM_TP_CERTVERIFY_STATUS = CSSM_TP_CERTVERIFY_STATUS(CSSM_TP_CERTVERIFY_UNKNOWN)) {
 		self.certificates = certificates

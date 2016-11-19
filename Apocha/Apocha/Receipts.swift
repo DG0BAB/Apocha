@@ -29,10 +29,10 @@ public struct Receipt {
 	let appVersion: String
 	
 	/// An opaque value used, with other data, to compute the SHA-1 hash during validation.
-	let opaqueValue: [UInt8]
+	let opaqueValue: Data
 	
 	///A SHA-1 hash, used to validate the receipt.
-	let sha1Hash: [UInt8]
+	let sha1Hash: Data
 	
 	/** An Array with in-app purchase receipts.
 	
@@ -72,7 +72,7 @@ public struct Receipt {
 	/// the receipt does not expire. When validating a receipt, compare this date to the current date to determine whether
 	/// the receipt is expired. Do not try to use this date to calculate any other information, such as the time remaining
 	/// before expiration.
-	let receiptExpirationDate: Date
+	let receiptExpirationDate: Date?
 }
 
 
@@ -89,7 +89,7 @@ public struct InAppPurchaseReceipt {
 	let cancellationDate: Date?
 	let appItemId: String?
 	let externalVersionIdentifier: String?
-	let webOrderLineItemId: Int
+	let webOrderLineItemId: Int?
 }
 
 
@@ -98,7 +98,6 @@ infix operator >>>: LogicalConjunctionPrecedence
 
 /// Conjunction Operator to chain calls together that return an OSStatus Value
 private func >>>(result: OSStatus, function: @autoclosure () -> OSStatus) -> OSStatus {
-	print(result)
 	if result == noErr {
 		return function()
 	}
@@ -125,7 +124,7 @@ open class RawReceipt {
 	- throws: ApochaError.invalidReceipt In case there is no receipt at the given
 	URL or the receipt can not be read.
 	*/
-	init(url: URL) throws {
+	public init(url: URL) throws {
 		do {
 			data = try Data(contentsOf: url)
 			self.url = url
@@ -138,7 +137,7 @@ open class RawReceipt {
 	- throws: ApochaError.decodingReceipt(DecodingFailures)
 	- returns: DecodedReceipt
 	*/
-	func decode() throws -> DecodedReceipt {
+	public func decode() throws -> DecodedReceipt {
 		var itemFormat: SecExternalFormat = .formatPKCS7
 		var itemType: SecExternalItemType = .itemTypeUnknown
 		var outItems: CFArray?
@@ -185,22 +184,22 @@ checks as good as possible.
 public struct DecodedReceipt {
 	
 	/// The Certificates used to sign this receipt
-	let certificates: [SecCertificate]?
+	public let certificates: [SecCertificate]?
 	
 	/// The number of certificates used to sign the receipt
-	var numCertificates: Int {
+	public var numCertificates: Int {
 		guard let num = certificates?.count else { return 0 }
 		return num
 	}
 	
 	/// The number of signers. Check, if it matches the expected number of signers
-	let numSigners: Int
+	public let numSigners: Int
 	
 	/// Signer Status. Check if this matches the desired status.
-	let signerStatus: CMSSignerStatus
+	public let signerStatus: CMSSignerStatus
 	
 	/// The verifications status of the certificates. Check, if this matches the disired status.
-	let certVerificationStatus: CSSM_TP_CERTVERIFY_STATUS
+	public let certVerificationStatus: CSSM_TP_CERTVERIFY_STATUS
 	
 	private let payload: Data?
 	
@@ -212,7 +211,7 @@ public struct DecodedReceipt {
 		- signerStatus: The signer status. Default is .unsigned
 		- certVerificationStatus: The status of the certificate verification. Default = CSSM_TP_CERTVERIFY_UNKNOWN
 	*/
-	init(certificates: [SecCertificate], payload: Data, numSigners: Int = 0, signerStatus: CMSSignerStatus = .unsigned, certVerificationStatus: CSSM_TP_CERTVERIFY_STATUS = CSSM_TP_CERTVERIFY_STATUS(CSSM_TP_CERTVERIFY_UNKNOWN)) {
+	public init(certificates: [SecCertificate], payload: Data, numSigners: Int = 0, signerStatus: CMSSignerStatus = .unsigned, certVerificationStatus: CSSM_TP_CERTVERIFY_STATUS = CSSM_TP_CERTVERIFY_STATUS(CSSM_TP_CERTVERIFY_UNKNOWN)) {
 		self.certificates = certificates
 		self.payload = payload
 		self.numSigners = numSigners
@@ -226,7 +225,7 @@ public struct DecodedReceipt {
 	- throws: ApochaError.retrievingCertificateValues(Error)
 	- returns: A dictionary of type [String : Any]
 	*/
-	func valuesFromCertificate(_ certificate: SecCertificate) throws -> [String : Any]? {
+	public func valuesFromCertificate(_ certificate: SecCertificate) throws -> [String : Any]? {
 		var error: Unmanaged<CFError>?
 		guard let result = SecCertificateCopyValues(certificate, nil, &error) as? [String : Any] else {
 			throw ApochaError.retrievingCertificateValues(error as! Error)
@@ -243,7 +242,7 @@ public struct DecodedReceipt {
 	**See also:**
 	[Receipt Validation Programming Guide - Receipt Fields](https://developer.apple.com/library/content/releasenotes/General/ValidateAppStoreReceipt/Chapters/ReceiptFields.html#//apple_ref/doc/uid/TP40010573-CH106-SW1)
 	*/
-	lazy var receipt: Receipt? = {
+	public lazy var receipt: Receipt? = {
 		guard let payload = self.payload else { return nil }
 		return Receipt(payload: payload)
 	}()

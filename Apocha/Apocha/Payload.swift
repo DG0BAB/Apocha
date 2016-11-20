@@ -129,24 +129,24 @@ private class PayloadDecoder: PayloadInitializable {
 	
 	fileprivate var values: [ASNField.ASNFieldType : Any] = [:]
 	
-	private let sizeofAsn1Data = UInt32(MemoryLayout<SecAsn1Item>.stride)
-	private let sizeofReceiptAttribute = UInt32(MemoryLayout<ReceiptAttribute>.stride)
-	private var sub: Void? = nil
+	private static let sizeofAsn1Data = UInt32(MemoryLayout<SecAsn1Item>.stride)
+	private static let sizeofReceiptAttribute = UInt32(MemoryLayout<ReceiptAttribute>.stride)
+	private static var sub: Void? = nil
+
+	private static let oneReceiptAttributeTemplate: [SecAsn1Template] = [
+		SecAsn1Template(kind: UInt32(SEC_ASN1_SEQUENCE), offset: 0, sub: &sub, size: sizeofReceiptAttribute),
+		SecAsn1Template(kind: UInt32(SEC_ASN1_INTEGER), offset: 0, sub: &sub, size: 0),
+		SecAsn1Template(kind: UInt32(SEC_ASN1_INTEGER), offset: sizeofAsn1Data, sub: &sub, size: 0),
+		SecAsn1Template(kind: UInt32(SEC_ASN1_OCTET_STRING), offset: sizeofAsn1Data*2, sub: &sub, size: 0),
+		SecAsn1Template(kind: 0, offset: 0, sub: &sub, size: 0),
+		]
+	
+	private static let receiptAttributeSetTemplate: [SecAsn1Template] = [
+		SecAsn1Template(kind: UInt32(SEC_ASN1_SET | SEC_ASN1_GROUP), offset: 0, sub: oneReceiptAttributeTemplate, size: UInt32(MemoryLayout.stride(ofValue: oneReceiptAttributeTemplate))),
+		SecAsn1Template(kind: 0, offset: 0, sub: &sub, size: 0),
+		]
 	
 	required public init?(payload: Data) {
-		let oneReceiptAttributeTemplate: [SecAsn1Template] = [
-			SecAsn1Template(kind: UInt32(SEC_ASN1_SEQUENCE), offset: 0, sub: &sub, size: sizeofReceiptAttribute),
-			SecAsn1Template(kind: UInt32(SEC_ASN1_INTEGER), offset: 0, sub: &sub, size: 0),
-			SecAsn1Template(kind: UInt32(SEC_ASN1_INTEGER), offset: sizeofAsn1Data, sub: &sub, size: 0),
-			SecAsn1Template(kind: UInt32(SEC_ASN1_OCTET_STRING), offset: sizeofAsn1Data*2, sub: &sub, size: 0),
-			SecAsn1Template(kind: 0, offset: 0, sub: &sub, size: 0),
-			]
-		
-		let receiptAttributeSetTemplate: [SecAsn1Template] = [
-			SecAsn1Template(kind: UInt32(SEC_ASN1_SET | SEC_ASN1_GROUP), offset: 0, sub: oneReceiptAttributeTemplate, size: UInt32(MemoryLayout.stride(ofValue: oneReceiptAttributeTemplate))),
-			SecAsn1Template(kind: 0, offset: 0, sub: &sub, size: 0),
-			]
-		
 		// Create the ASN.1 parser/decoder
 		var asn1Decoder: SecAsn1CoderRef?
 		var status = SecAsn1CoderCreate(&asn1Decoder)
@@ -158,7 +158,7 @@ private class PayloadDecoder: PayloadInitializable {
 		payload.copyBytes(to: payloadBytes, count: payload.count)
 			
 		// Decode the Payload
-		status = SecAsn1Decode(asn1Decoder!, payloadBytes, payload.count, receiptAttributeSetTemplate, &attributes)
+		status = SecAsn1Decode(asn1Decoder!, payloadBytes, payload.count, PayloadDecoder.receiptAttributeSetTemplate, &attributes)
 
 		guard status == noErr else { return nil }
 

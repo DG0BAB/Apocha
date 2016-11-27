@@ -51,7 +51,7 @@ public struct Receipt {
 	/// The version of the app that was originally purchased.
 	/// This corresponds to the value of CFBundleVersion (in iOS) or CFBundleShortVersionString (in OS X) in the
 	/// Info.plist file when the purchase was originally made.
-	///	In the sandbox environment, the value of this field is always “1.0”.
+	/// In the sandbox environment, the value of this field is always “1.0”.
 	let originalApplicationVersion: String;
 	
 	/** The date when the app receipt was created.

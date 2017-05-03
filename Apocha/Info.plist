@@ -16,12 +16,8 @@
 	<string>FMWK</string>
 	<key>CFBundleShortVersionString</key>
 	<string>1.0</string>
-	<key>CFBundleSignature</key>
-	<string>????</string>
 	<key>CFBundleVersion</key>
 	<string>$(CURRENT_PROJECT_VERSION)</string>
-	<key>NSHumanReadableCopyright</key>
-	<string>Copyright © 2016 micabo software UG. All rights reserved.</string>
 	<key>NSPrincipalClass</key>
 	<string></string>
 </dict>

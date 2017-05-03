@@ -8,6 +8,9 @@
 
 import Foundation
 
+
+// #if os(OSX) || os(iOS) || os(tvOS) || os(watchOS)
+
 // MARK: - Receipt
 
 /** A Receipt provides all the receipt fields for an App-Receipt.
@@ -52,7 +55,7 @@ public struct Receipt {
 	/// This corresponds to the value of CFBundleVersion (in iOS) or CFBundleShortVersionString (in OS X) in the
 	/// Info.plist file when the purchase was originally made.
 	/// In the sandbox environment, the value of this field is always “1.0”.
-	let originalApplicationVersion: String;
+	let originalApplicationVersion: String
 	
 	/** The date when the app receipt was created.
 	When validating a receipt, use this date to validate the receipt’s signature.
@@ -94,9 +97,9 @@ public struct InAppPurchaseReceipt {
 
 
 // MARK: - Custom Operator
-infix operator >>>: LogicalConjunctionPrecedence
 
 /// Conjunction Operator to chain calls together that return an OSStatus Value
+infix operator >>>: LogicalConjunctionPrecedence
 private func >>>(result: OSStatus, function: @autoclosure () -> OSStatus) -> OSStatus {
 	if result == noErr {
 		return function()
@@ -110,7 +113,7 @@ private func >>>(result: OSStatus, function: @autoclosure () -> OSStatus) -> OSS
 /**
 A RawReceipt contains the encrypted data of the Receipt exactly how it is stored
 at a given URL. A RawReceipt is initialized with an URL. During initialization,
-the receipt is read amd contents are stored within an internal Buffer of type Data.
+the receipt is read and contents are stored within an internal Buffer of type Data.
 
 Use the decode function to decrypt the RwaReceipt into a DecodedReceipt
 */
@@ -143,11 +146,10 @@ open class RawReceipt {
 		var outItems: CFArray?
 		let importStatus = SecItemImport(data as CFData, nil, &itemFormat, &itemType, [SecItemImportExportFlags.pemArmour], nil, nil, &outItems)
 		
-		guard let certificates = outItems as? [SecCertificate], importStatus == noErr, certificates.count == 3  else {
+		guard let certificates = outItems as? [SecCertificate], importStatus == noErr, certificates.count == 3 else {
 			throw ApochaError.decodingReceipt(.retrievingCertificates)
 		}
 		
-		let basicX509Policy: SecPolicy = SecPolicyCreateBasicX509()
 		var decoder: CMSDecoder?
 		var content: CFData?
 		var numberOfSigners: Int = 0
@@ -157,6 +159,8 @@ open class RawReceipt {
 		let bytes: UnsafeMutablePointer<UInt8> = UnsafeMutablePointer.allocate(capacity: data.count)
 		data.copyBytes(to: bytes, count: data.count)
 		
+		let basicX509Policy: SecPolicy = SecPolicyCreateBasicX509()
+		
 		let status = CMSDecoderCreate(&decoder)
 			>>> CMSDecoderUpdateMessage(decoder!, bytes, data.count)
 			>>> CMSDecoderFinalizeMessage(decoder!)
@@ -164,7 +168,7 @@ open class RawReceipt {
 			>>> CMSDecoderGetNumSigners(decoder!, &numberOfSigners)
 			>>> CMSDecoderCopySignerStatus(decoder!, 0, basicX509Policy, true, &signerStatus, nil, &certificateVerificationStatus)
 		
-		guard let payload = content as? Data, status == noErr else {
+		guard let payload = content as Data?, status == noErr else {
 			throw ApochaError.decodingReceipt(.retrievingPayload)
 		}
 		return DecodedReceipt(certificates: certificates, payload: payload, numSigners: numberOfSigners, signerStatus: signerStatus, certVerificationStatus: CSSM_TP_CERTVERIFY_STATUS(certificateVerificationStatus))

@@ -10,6 +10,11 @@
 		794928321CA5B22700F6F8C0 /* Apocha.h in Headers */ = {isa = PBXBuildFile; fileRef = 794928311CA5B22700F6F8C0 /* Apocha.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		794928391CA5B22800F6F8C0 /* Apocha.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7949282E1CA5B22700F6F8C0 /* Apocha.framework */; };
 		7949283E1CA5B22800F6F8C0 /* ApochaTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7949283D1CA5B22800F6F8C0 /* ApochaTests.swift */; };
+		7956515B1E15B3E30031D726 /* Apocha.h in Headers */ = {isa = PBXBuildFile; fileRef = 795651591E15B3E30031D726 /* Apocha.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		7956515F1E15B56E0031D726 /* Receipts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 799360EE1DC14B7600E2EE9C /* Receipts.swift */; };
+		795651601E15B5720031D726 /* Payload.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79BCAF321DD2346D005F1257 /* Payload.swift */; };
+		795651611E15B5760031D726 /* Error.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79B570171DCFA40100407824 /* Error.swift */; };
+		795651651E15C2210031D726 /* SecAsn1CSSM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 795651631E15C11A0031D726 /* SecAsn1CSSM.swift */; };
 		799360EF1DC14B7600E2EE9C /* Receipts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 799360EE1DC14B7600E2EE9C /* Receipts.swift */; };
 		79B570181DCFA40100407824 /* Error.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79B570171DCFA40100407824 /* Error.swift */; };
 		79BCAF331DD2346D005F1257 /* Payload.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79BCAF321DD2346D005F1257 /* Payload.swift */; };
@@ -34,7 +39,13 @@
 		794928381CA5B22800F6F8C0 /* ApochaTests OSX.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "ApochaTests OSX.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		7949283D1CA5B22800F6F8C0 /* ApochaTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApochaTests.swift; sourceTree = "<group>"; };
 		7949283F1CA5B22800F6F8C0 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		795651571E15B3E30031D726 /* Apocha.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Apocha.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		795651591E15B3E30031D726 /* Apocha.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Apocha.h; sourceTree = "<group>"; };
+		7956515A1E15B3E30031D726 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		795651631E15C11A0031D726 /* SecAsn1CSSM.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SecAsn1CSSM.swift; sourceTree = "<group>"; };
 		799360EE1DC14B7600E2EE9C /* Receipts.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Receipts.swift; sourceTree = "<group>"; };
+		799816EB1E147AC200463002 /* Apocha_iOS.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Apocha_iOS.h; sourceTree = "<group>"; };
+		799816EC1E147AC200463002 /* Apocha_iOS.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Apocha_iOS.m; sourceTree = "<group>"; };
 		79AD61571DE1D5BB00CB45A6 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		79B570171DCFA40100407824 /* Error.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Error.swift; sourceTree = "<group>"; };
 		79BCAF321DD2346D005F1257 /* Payload.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Payload.swift; sourceTree = "<group>"; };
@@ -56,6 +67,13 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		795651531E15B3E30031D726 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
@@ -74,6 +92,8 @@
 				79AD61571DE1D5BB00CB45A6 /* README.md */,
 				794928301CA5B22700F6F8C0 /* Apocha */,
 				7949283C1CA5B22800F6F8C0 /* ApochaTests */,
+				799816EA1E147AC200463002 /* Apocha iOS */,
+				795651581E15B3E30031D726 /* Apocha */,
 				7949282F1CA5B22700F6F8C0 /* Products */,
 				792D429D1DD7E80000E66FD6 /* Frameworks */,
 			);
@@ -84,6 +104,7 @@
 			children = (
 				7949282E1CA5B22700F6F8C0 /* Apocha.framework */,
 				794928381CA5B22800F6F8C0 /* ApochaTests OSX.xctest */,
+				795651571E15B3E30031D726 /* Apocha.framework */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -91,6 +112,7 @@
 		794928301CA5B22700F6F8C0 /* Apocha */ = {
 			isa = PBXGroup;
 			children = (
+				795651621E15BE270031D726 /* iOS Support */,
 				799360F01DC14B8400E2EE9C /* Supporting Files */,
 				794928311CA5B22700F6F8C0 /* Apocha.h */,
 				799360EE1DC14B7600E2EE9C /* Receipts.swift */,
@@ -109,12 +131,38 @@
 			path = ApochaTests;
 			sourceTree = "<group>";
 		};
+		795651581E15B3E30031D726 /* Apocha */ = {
+			isa = PBXGroup;
+			children = (
+				795651591E15B3E30031D726 /* Apocha.h */,
+				7956515A1E15B3E30031D726 /* Info.plist */,
+			);
+			path = Apocha;
+			sourceTree = "<group>";
+		};
+		795651621E15BE270031D726 /* iOS Support */ = {
+			isa = PBXGroup;
+			children = (
+				795651631E15C11A0031D726 /* SecAsn1CSSM.swift */,
+			);
+			name = "iOS Support";
+			sourceTree = "<group>";
+		};
 		799360F01DC14B8400E2EE9C /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
 				794928331CA5B22700F6F8C0 /* Info.plist */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		799816EA1E147AC200463002 /* Apocha iOS */ = {
+			isa = PBXGroup;
+			children = (
+				799816EB1E147AC200463002 /* Apocha_iOS.h */,
+				799816EC1E147AC200463002 /* Apocha_iOS.m */,
+			);
+			path = "Apocha iOS";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -125,6 +173,14 @@
 			buildActionMask = 2147483647;
 			files = (
 				794928321CA5B22700F6F8C0 /* Apocha.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		795651541E15B3E30031D726 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				7956515B1E15B3E30031D726 /* Apocha.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -167,6 +223,24 @@
 			productReference = 794928381CA5B22800F6F8C0 /* ApochaTests OSX.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
+		795651561E15B3E30031D726 /* Apocha iOS */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 7956515C1E15B3E30031D726 /* Build configuration list for PBXNativeTarget "Apocha iOS" */;
+			buildPhases = (
+				795651521E15B3E30031D726 /* Sources */,
+				795651531E15B3E30031D726 /* Frameworks */,
+				795651541E15B3E30031D726 /* Headers */,
+				795651551E15B3E30031D726 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "Apocha iOS";
+			productName = Apocha;
+			productReference = 795651571E15B3E30031D726 /* Apocha.framework */;
+			productType = "com.apple.product-type.framework";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -185,6 +259,11 @@
 						CreatedOnToolsVersion = 7.3;
 						LastSwiftMigration = 0800;
 					};
+					795651561E15B3E30031D726 = {
+						CreatedOnToolsVersion = 8.2.1;
+						DevelopmentTeam = B46F95JC8U;
+						ProvisioningStyle = Automatic;
+					};
 				};
 			};
 			buildConfigurationList = 794928281CA5B22700F6F8C0 /* Build configuration list for PBXProject "Apocha" */;
@@ -202,6 +281,7 @@
 			targets = (
 				7949282D1CA5B22700F6F8C0 /* Apocha OSX */,
 				794928371CA5B22800F6F8C0 /* ApochaTests OSX */,
+				795651561E15B3E30031D726 /* Apocha iOS */,
 			);
 		};
 /* End PBXProject section */
@@ -215,6 +295,13 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 		794928361CA5B22800F6F8C0 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		795651551E15B3E30031D726 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -239,6 +326,17 @@
 			buildActionMask = 2147483647;
 			files = (
 				7949283E1CA5B22800F6F8C0 /* ApochaTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		795651521E15B3E30031D726 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				795651651E15C2210031D726 /* SecAsn1CSSM.swift in Sources */,
+				795651601E15B5720031D726 /* Payload.swift in Sources */,
+				795651611E15B5760031D726 /* Error.swift in Sources */,
+				7956515F1E15B56E0031D726 /* Receipts.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -301,6 +399,7 @@
 				SDKROOT = macosx;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_TREAT_WARNINGS_AS_ERRORS = NO;
+				SWIFT_VERSION = 3.0;
 				VERSIONING_SYSTEM = "apple-generic";
 				VERSION_INFO_PREFIX = "";
 			};
@@ -346,6 +445,7 @@
 				SDKROOT = macosx;
 				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
 				SWIFT_TREAT_WARNINGS_AS_ERRORS = NO;
+				SWIFT_VERSION = 3.0;
 				VERSIONING_SYSTEM = "apple-generic";
 				VERSION_INFO_PREFIX = "";
 			};
@@ -368,7 +468,6 @@
 				PRODUCT_BUNDLE_IDENTIFIER = de.micabo.Apocha;
 				SKIP_INSTALL = YES;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
-				SWIFT_VERSION = 3.0;
 			};
 			name = Debug;
 		};
@@ -388,7 +487,6 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = de.micabo.Apocha;
 				SKIP_INSTALL = YES;
-				SWIFT_VERSION = 3.0;
 			};
 			name = Release;
 		};
@@ -418,6 +516,55 @@
 			};
 			name = Release;
 		};
+		7956515D1E15B3E30031D726 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CODE_SIGN_IDENTITY = "";
+				DEFINES_MODULE = YES;
+				DEVELOPMENT_TEAM = B46F95JC8U;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				INFOPLIST_FILE = Apocha/Info.plist;
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 10.2;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = de.micabo.Apocha;
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_VERSION = 3.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		7956515E1E15B3E30031D726 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CODE_SIGN_IDENTITY = "";
+				DEFINES_MODULE = YES;
+				DEVELOPMENT_TEAM = B46F95JC8U;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				INFOPLIST_FILE = Apocha/Info.plist;
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 10.2;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = de.micabo.Apocha;
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 3.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -444,6 +591,15 @@
 			buildConfigurations = (
 				794928461CA5B22800F6F8C0 /* Debug */,
 				794928471CA5B22800F6F8C0 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		7956515C1E15B3E30031D726 /* Build configuration list for PBXNativeTarget "Apocha iOS" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				7956515D1E15B3E30031D726 /* Debug */,
+				7956515E1E15B3E30031D726 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

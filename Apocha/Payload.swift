@@ -7,7 +7,11 @@
 //
 
 import Foundation
+#if os(macOS)
 import Security.SecAsn1Coder
+#elseif os(iOS) || os(tvOS) || os(watchOS)
+
+#endif
 
 private protocol PayloadInitializable {
 	init?(payload: Data)
@@ -82,13 +86,11 @@ extension InAppPurchaseReceipt: PayloadInitializable {
 
 // MARK: - Private Stuff 
 
-private extension Dictionary {
+private extension Dictionary where Key == ASNField.ASNFieldType {
 	subscript(key: ASNField.ASNFieldType) -> Any? {
 		get {
-			if let indexForKey = self.index(forKey: key as! Key) {
-				return self[indexForKey].value
-			}
-			return nil
+			guard let indexForKey = self.index(forKey: key) else { return nil }
+			return self[indexForKey].value
 		}
 		// Special handling for InAppPurchase receipts
 		// Because there can be more than one of them,
@@ -104,9 +106,9 @@ private extension Dictionary {
 						value = [value]
 					}
 				}
-				updateValue(value as! Value, forKey: key as! Key)
+				updateValue(value as! Value, forKey: key)
 			} else {
-				removeValue(forKey: key as! Key)
+				removeValue(forKey: key)
 			}
 		}
 	}
@@ -210,7 +212,7 @@ private struct ASNField {
 		case webOrderLineItemId = 1711, cancellationDate
 	}
 	
-	enum ASNValueType: UInt8 {
+	private enum ASNValueType: UInt8 {
 		case integer = 0x02
 		case data = 0x04
 		case utf8String = 0x0c
@@ -271,8 +273,8 @@ private struct ASNField {
 	}
 	
 	fileprivate let fieldType: ASNFieldType
-	fileprivate let valueType: ASNValueType
 	fileprivate let value: Any
+	private let valueType: ASNValueType
 	
 	init?(receiptAttribute: ReceiptAttribute) {
 		// Fail if fieldType can't be dtermined

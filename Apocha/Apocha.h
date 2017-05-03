@@ -2,11 +2,11 @@
 //  Apocha.h
 //  Apocha
 //
-//  Created by Joachim Deelen on 25.03.16.
+//  Created by Joachim Deelen on 29.12.16.
 //  Copyright © 2016 micabo software UG. All rights reserved.
 //
 
-#import <Cocoa/Cocoa.h>
+#import <Foundation/Foundation.h>
 
 //! Project version number for Apocha.
 FOUNDATION_EXPORT double ApochaVersionNumber;
